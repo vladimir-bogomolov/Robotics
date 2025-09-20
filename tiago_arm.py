@@ -8,6 +8,7 @@ from mapping import Mapping
 from navigation import Navigation
 from planning import Planning
 from set_position import SetPosition
+from map_helpers import camera_to_base
 
 positions = {
     'safe': {
@@ -40,13 +41,19 @@ positions = {
     }
 }
 
+robot_encoders = {
+       'torso_lift_joint': 'torso_lift_joint_sensor',
+       'head_1_joint': 'head_1_joint_sensor',
+       'head_2_joint': 'head_2_joint_sensor'
+    }
+
 # create the Robot instance.
 robot = Supervisor()
 
 # get the time step of the current world.
 timestep = int(robot.getBasicTimeStep())
 
-WP = [(0.92, -0.84), (0.51, -2.84), (-0.53, -3.29), (-1.71, -2.67), (-1.72, 0.3), (0, 0), (-0.99, 0.57), (-1.71, 0.05), (-1.64, -2.8), (-0.53, -3.29), (0.73, -2.15), (0.57, -0.15), (0, 0)] 
+WP = [(0.92, -0.84), (0.51, -2.84), (-0.53, -3.29), (-1.71, -2.67), (-1.72, 0.3), (0, 0), (-0.99, 0.57), (-1.71, 0.05), (-1.64, -2.8), (-0.53, -3.29), (0.73, -2.15), (0.57, -0.15), (0, 0)]
 
 class DoesMapExist(py_trees.behaviour.Behaviour):
     def update(self):
@@ -72,6 +79,10 @@ class FindObject(py_trees.behaviour.Behaviour):
         self.left_motor.setPosition(float('inf'))
         self.right_motor = self.robot.getDevice('wheel_right_joint')
         self.right_motor.setPosition(float('inf'))
+        for _, sensor_name in robot_encoders.items():
+            sensor = self.robot.getDevice(sensor_name)
+            if sensor:
+                sensor.enable(self.timestep)
     def update(self):
         self.left_motor.setVelocity(0.5)
         self.right_motor.setVelocity(-0.5)
@@ -87,7 +98,13 @@ class FindObject(py_trees.behaviour.Behaviour):
             # TO DO: recalculate to base robot coordinates
             current_object_position = list(current_object.getPosition())
             self.blackboard.write('objects', current_object_position)
-            print(current_object_position)
+            sensor_values = {}
+            for _, sensor_name in robot_encoders.items():
+                sensor = self.robot.getDevice(sensor_name)
+                if sensor:
+                    current_value = sensor.getValue()
+                    sensor_values[sensor_name] = current_value
+            print(camera_to_base(current_object_position[0], current_object_position[1], current_object_position[2], sensor_values['torso_lift_joint_sensor'], sensor_values['head_1_joint_sensor'], sensor_values['head_2_joint_sensor']))
             return py_trees.common.Status.SUCCESS
         return py_trees.common.Status.RUNNING
 
