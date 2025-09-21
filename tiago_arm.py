@@ -8,7 +8,7 @@ from mapping import Mapping
 from navigation import Navigation
 from planning import Planning
 from set_position import SetPosition
-from map_helpers import camera_to_base
+from camera_helpers import camera_to_base
 
 positions = {
     'safe': {
