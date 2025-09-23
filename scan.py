@@ -18,41 +18,45 @@ class FindObject(py_trees.behaviour.Behaviour):
                 if sensor:
                     sensor.enable(self.timestep)
     def update(self):
-        self.left_motor.setVelocity(0)
-        self.right_motor.setVelocity(0)
+        # self.left_motor.setVelocity(0)
+        # self.right_motor.setVelocity(0)
         
         (found, coordinates) = find_object(self.camera, self.timestep, self.robot)
         if found:
-            delta = 0.015
+            delta = 0.002
 
             # Align y axis
             if (coordinates[1] < -delta or coordinates[1] > delta):
                 print("Aligning Y axis")
                 # Ensure enough space
                 if (coordinates[0] < 1.45):
-                    self.left_motor.setVelocity(-0.5)
-                    self.right_motor.setVelocity(-0.5)
+                    print("Backwards")
+                    self.left_motor.setVelocity(-1)
+                    self.right_motor.setVelocity(-1)
                     return py_trees.common.Status.RUNNING
                 if (coordinates[1] < 0):
                     # Turn right
+                    print("Right")
+                    self.left_motor.setVelocity(1)
                     self.right_motor.setVelocity(-0.5)
-                    self.left_motor.setVelocity(0.5)
                 else:
                     # Turn left
+                    print("Left")
                     self.left_motor.setVelocity(-0.5)
-                    self.right_motor.setVelocity(0.5)
+                    self.right_motor.setVelocity(1)
                 return py_trees.common.Status.RUNNING
             else:
                 print("Alining X axis")
-                arm_length = 1.43
+                arm_length = 1.35
                 if (coordinates[0] > arm_length):
                     self.left_motor.setVelocity(0.5)
                     self.right_motor.setVelocity(0.5)
                     return py_trees.common.Status.RUNNING
             return py_trees.common.Status.SUCCESS
         else:
-            self.left_motor.setVelocity(0.5)
-            self.right_motor.setVelocity(-0.5)
+            print("Right not found")
+            self.left_motor.setVelocity(1)
+            self.right_motor.setVelocity(-1)
             return py_trees.common.Status.RUNNING
     
     def terminate(self, new_status):

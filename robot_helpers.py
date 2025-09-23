@@ -16,7 +16,7 @@ positions = {
        'head_2_joint': 0
     },
     'open': {
-       'torso_lift_joint': 0.35,
+       'torso_lift_joint': 0.28,
        'arm_1_joint': 1.71,
        'arm_2_joint': 0,
        'arm_3_joint': 0,
