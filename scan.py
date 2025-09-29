@@ -23,38 +23,35 @@ class FindObject(py_trees.behaviour.Behaviour):
         
         (found, coordinates) = find_object(self.camera, self.timestep, self.robot)
         if found:
-            delta = 0.002
+            delta = 0.008
 
             # Align y axis
             if (coordinates[1] < -delta or coordinates[1] > delta):
                 print("Aligning Y axis")
                 # Ensure enough space
-                if (coordinates[0] < 1.45):
-                    print("Backwards")
+                if (coordinates[0] < 1.5):
                     self.left_motor.setVelocity(-1)
                     self.right_motor.setVelocity(-1)
                     return py_trees.common.Status.RUNNING
                 if (coordinates[1] < 0):
                     # Turn right
-                    print("Right")
                     self.left_motor.setVelocity(1)
-                    self.right_motor.setVelocity(-0.5)
+                    self.right_motor.setVelocity(0)
                 else:
                     # Turn left
-                    print("Left")
-                    self.left_motor.setVelocity(-0.5)
+                    self.left_motor.setVelocity(0)
                     self.right_motor.setVelocity(1)
                 return py_trees.common.Status.RUNNING
             else:
                 print("Alining X axis")
-                arm_length = 1.35
+                arm_length = 1.27
                 if (coordinates[0] > arm_length):
                     self.left_motor.setVelocity(0.5)
                     self.right_motor.setVelocity(0.5)
                     return py_trees.common.Status.RUNNING
-            return py_trees.common.Status.SUCCESS
+                else:
+                    return py_trees.common.Status.SUCCESS
         else:
-            print("Right not found")
             self.left_motor.setVelocity(1)
             self.right_motor.setVelocity(-1)
             return py_trees.common.Status.RUNNING

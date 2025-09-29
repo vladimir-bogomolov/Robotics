@@ -19,7 +19,7 @@ class Navigation(py_trees.behaviour.Behaviour):
         self.left_motor.setPosition(float('inf'))
         self.right_motor = self.robot.getDevice('wheel_right_joint')
         self.right_motor.setPosition(float('inf'))
-        self.marker = self.robot.getFromDef('marker').getField('translation')
+        # self.marker = self.robot.getFromDef('marker').getField('translation')
         self.display = self.robot.getDevice('display')
                 
     def initialise(self):
@@ -62,7 +62,7 @@ class Navigation(py_trees.behaviour.Behaviour):
         left_speed = max(min(left_speed,6.28),-6.28)
         right_speed = max(min(right_speed,6.28),-6.28)
         # Set marker to a way point
-        self.marker.setSFVec3f([*self.WP[self.index], 0])
+        # self.marker.setSFVec3f([*self.WP[self.index], 0])
         # Set speed values for the motors
         self.left_motor.setVelocity(left_speed)
         self.right_motor.setVelocity(right_speed)

@@ -17,8 +17,8 @@ positions = {
     },
     'open': {
        'torso_lift_joint': 0.28,
-       'arm_1_joint': 1.71,
-       'arm_2_joint': 0,
+       'arm_1_joint': 1.605,
+       'arm_2_joint': -0.04,
        'arm_3_joint': 0,
        'arm_4_joint': 0,
        'arm_5_joint': 0,
@@ -28,7 +28,25 @@ positions = {
        'gripper_right_finger_joint': 0.044,
        'head_1_joint': 0,
        'head_2_joint': -0.3
-    }
+    },
+    'holding': {
+       'torso_lift_joint': 0.35,
+       'arm_6_joint': 0.2,
+       'arm_2_joint': 0.25,
+       'arm_6_joint': 0.6
+    },
+    'holding2': {
+       'torso_lift_joint': 0.35,
+       'arm_1_joint': 0.71,
+       'arm_2_joint': 1.02,
+       'arm_3_joint': -2.815,
+       'arm_4_joint': 1.011,
+       'arm_5_joint': 0,
+       'arm_6_joint': 0,
+       'arm_7_joint': 0,
+       'head_1_joint': 0,
+       'head_2_joint': 0
+    },
 }
 
 robot_camera_position_encoders = {
@@ -36,6 +54,11 @@ robot_camera_position_encoders = {
        'head_1_joint': 'head_1_joint_sensor',
        'head_2_joint': 'head_2_joint_sensor'
     }
+
+robot_touch_sensors = {
+    'gripper_left_finger_joint': 'gripper_left_sensor_finger_joint',
+    'gripper_right_finger_joint': 'gripper_right_sensor_finger_joint'
+}
 
 def R_y(theta):
     c, s = np.cos(theta), np.sin(theta)
@@ -66,7 +89,7 @@ def camera_to_base(x_cam, y_cam, z_cam,
     t_torso = np.array([0.0, 0.0, 0.0])   # torso base offset
     t_head1 = np.array([0.182, 0.0, 0.0]) # torso->head_1
     t_head2 = np.array([0.005, 0.0, 0.098]) # head_1->head_2
-    t_cam   = np.array([0.186, 0.1254, -0.009]) # head_2->camera
+    t_cam   = np.array([0.186, 0, -0.009]) # head_2->camera
 
     # --- homogeneous transforms ---
     # base -> torso

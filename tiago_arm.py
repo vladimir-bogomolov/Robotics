@@ -8,6 +8,7 @@ from mapping import Mapping
 from navigation import Navigation
 from planning import Planning
 from scan import FindObject
+from picking import PickTheObject
 from set_position import SetPosition
 from robot_helpers import positions
 
@@ -66,11 +67,14 @@ tree = Sequence("Main", children=[
                     Navigation("Move around the table", blackboard)
                 ])
             ], memory=True),
-            Planning("Compute path to the counter", blackboard, (0.71, 0.41)),
+            Planning("Compute path to the counter", blackboard, (0.4, 0.04)),
             Navigation("Move to the counter", blackboard),
             SetPosition("Put arm in target position", blackboard, positions['open']),
             FindObject("Find target object to grasp", blackboard),
-            # PickTheObject("Pick the object up", blackboard),
+            PickTheObject("Pick the object up", blackboard),
+            SetPosition("Put arm in target position", blackboard, positions['holding']),
+            Planning("Compute path to the table", blackboard, (0, 0)),
+            Navigation("Move to the table", blackboard),
             Stop("Stop", blackboard)
        ], memory=True)
        
