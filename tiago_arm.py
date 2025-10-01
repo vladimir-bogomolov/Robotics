@@ -11,6 +11,8 @@ from scan import FindObject
 from picking import PickTheObject
 from set_position import SetPosition
 from robot_helpers import positions
+from backwards import MoveBackward
+from face_table import FaceTable
 
 # create the Robot instance.
 robot = Supervisor()
@@ -57,6 +59,7 @@ class Blackboard:
 blackboard = Blackboard()
 blackboard.write('robot', robot)
 blackboard.write('waypoints', WP)
+blackboard.write('table', (-0.65, -1.43))
 
 tree = Sequence("Main", children=[
             SetPosition("Put arm in target position", blackboard, positions['safe']),
@@ -73,8 +76,10 @@ tree = Sequence("Main", children=[
             FindObject("Find target object to grasp", blackboard),
             PickTheObject("Pick the object up", blackboard),
             SetPosition("Put arm in target position", blackboard, positions['holding']),
-            Planning("Compute path to the table", blackboard, (0, 0)),
-            Navigation("Move to the table", blackboard),
+            MoveBackward("Move to the counter", blackboard),
+            Planning("Compute path to the counter", blackboard, (0, 0)),
+            Navigation("Move to the counter", blackboard),
+            FaceTable("Face the table", blackboard),
             Stop("Stop", blackboard)
        ], memory=True)
        

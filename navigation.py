@@ -61,8 +61,6 @@ class Navigation(py_trees.behaviour.Behaviour):
         right_speed = angle_error * p1 + distance_error * p2
         left_speed = max(min(left_speed,6.28),-6.28)
         right_speed = max(min(right_speed,6.28),-6.28)
-        # Set marker to a way point
-        # self.marker.setSFVec3f([*self.WP[self.index], 0])
         # Set speed values for the motors
         self.left_motor.setVelocity(left_speed)
         self.right_motor.setVelocity(right_speed)
