@@ -20,7 +20,7 @@ class PickTheObject(py_trees.behaviour.Behaviour):
         for joint_name, sensor_name in robot_touch_sensors.items():
             device = self.robot.getDevice(joint_name)
             if device:
-                if device.getForceFeedback() < -15:
+                if device.getForceFeedback() < -16:
                     print('Holding with Force ', device.getForceFeedback())
                     is_holding = True
                 device.setPosition(target_value)

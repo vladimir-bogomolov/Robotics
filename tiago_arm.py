@@ -53,14 +53,14 @@ tree = Sequence("Main", children=[
                     Navigation("Move around the table", blackboard)
                 ])
             ], memory=True),
-            # Planning("Compute path to the counter", blackboard, (0.4, 0.04)),
             Planning("Compute path to the counter", blackboard, (0.5, 0)),
             Navigation("Move to the counter", blackboard),
             SetPosition("Put arm in target position", blackboard, positions['half_open']),
             SetPosition("Put arm in target position", blackboard, positions['open']),
             FindObject("Find target object to grasp", blackboard),
             PickTheObject("Pick the object up", blackboard),
-            SetPosition("Put arm in target position", blackboard, positions['holding']),
+            SetPosition("Put arm in target position", blackboard, positions['holding1']),
+            SetPosition("Put arm in target position", blackboard, positions['holding2']),
             MoveBackward("Move to the table backwards", blackboard),
             Planning("Compute path to the table", blackboard, (0, 0)),
             Navigation("Move to the table", blackboard),

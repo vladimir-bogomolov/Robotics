@@ -34,15 +34,17 @@ positions = {
        'arm_5_joint': 0,
        'arm_6_joint': 0,
        'arm_7_joint': -1.5,
-       'gripper_left_finger_joint': 0.044,
-       'gripper_right_finger_joint': 0.044,
+       'gripper_left_finger_joint': 0.045,
+       'gripper_right_finger_joint': 0.045,
        'head_1_joint': 0,
        'head_2_joint': -0.3
     },
-    'holding': {
-       'torso_lift_joint': 0.35,
+    'holding1': {
+       'torso_lift_joint': 0.35
+    },
+    'holding2': {
        'arm_2_joint': 0.25,
-       'arm_6_joint': 0.6
+       'arm_6_joint': 0.3
     },
     'table': {
        'torso_lift_joint': 0.20,

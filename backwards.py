@@ -2,7 +2,7 @@ import py_trees
 import numpy as np
 
 class MoveBackward(py_trees.behaviour.Behaviour):
-    def __init__(self, name, blackboard, distance=0.65, speed=2.0):
+    def __init__(self, name, blackboard, distance=0.65, speed=0.5):
         super(MoveBackward, self).__init__(name)
         self.robot = blackboard.read('robot')
         self.blackboard = blackboard

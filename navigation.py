@@ -70,8 +70,8 @@ class Navigation(py_trees.behaviour.Behaviour):
         self.display.setColor(0xFCBA03)
         self.display.drawPixel(xd, yd)
         
-        # When in 0.4 m from the way point - switch to the next point
-        if (distance_error < 0.4):
+        # When in 0.5 m from the way point - switch to the next point
+        if (distance_error < 0.5):
             print('Reached ', self.WP[self.index])
             if self.index + 1 < len(self.WP):
                 self.index = self.index + 1
