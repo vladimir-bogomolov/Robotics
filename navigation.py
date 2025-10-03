@@ -30,6 +30,8 @@ class Navigation(py_trees.behaviour.Behaviour):
         self.printed = set()
         
     def update(self):
+        if len(self.WP) == 0:
+            return py_trees.common.Status.SUCCESS
         if (not self.index in self.printed):
             if self.index < len(self.WP):
                 print('Moving towards waypoint ', self.WP[self.index])

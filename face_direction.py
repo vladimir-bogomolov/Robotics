@@ -2,11 +2,12 @@ import py_trees
 import numpy as np
 from map_helpers import world2map
 
-class FaceTable(py_trees.behaviour.Behaviour):
-    def __init__(self, name, blackboard):
-        super(FaceTable, self).__init__(name)
+class FaceDirection(py_trees.behaviour.Behaviour):
+    def __init__(self, name, blackboard, target):
+        super(FaceDirection, self).__init__(name)
         self.robot = blackboard.read('robot')
         self.blackboard = blackboard
+        self.target = target
         
     def setup(self):
         self.timestep = int(self.robot.getBasicTimeStep())
@@ -23,7 +24,6 @@ class FaceTable(py_trees.behaviour.Behaviour):
                 
     def initialise(self):
         # Single waypoint
-        self.target = self.blackboard.read('table')
         self.left_motor.setVelocity(0)
         self.right_motor.setVelocity(0)
         print('Facing target point ', self.target)

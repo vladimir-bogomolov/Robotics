@@ -12,7 +12,7 @@ from picking import PickTheObject
 from set_position import SetPosition
 from robot_helpers import positions
 from backwards import MoveBackward
-from face_table import FaceTable
+from face_direction import FaceDirection
 
 # create the Robot instance.
 robot = Supervisor()
@@ -31,22 +31,6 @@ class DoesMapExist(py_trees.behaviour.Behaviour):
         else:
             print("No map found. Start mapping")
             return py_trees.common.Status.FAILURE
-
-class Stop(py_trees.behaviour.Behaviour):
-    def __init__(self, name, blackboard):
-        super(Stop, self).__init__(name)
-        self.robot = blackboard.read('robot')
-    def setup(self):
-        # enable sensors
-        self.timestep = int(self.robot.getBasicTimeStep())
-        self.left_motor = self.robot.getDevice('wheel_left_joint')
-        self.left_motor.setPosition(float('inf'))
-        self.right_motor = self.robot.getDevice('wheel_right_joint')
-        self.right_motor.setPosition(float('inf'))
-    def update(self):
-        self.left_motor.setVelocity(0)
-        self.right_motor.setVelocity(0)
-        return py_trees.common.Status.RUNNING  
              
 class Blackboard:
     def __init__(self):
@@ -59,7 +43,6 @@ class Blackboard:
 blackboard = Blackboard()
 blackboard.write('robot', robot)
 blackboard.write('waypoints', WP)
-blackboard.write('table', (-0.65, -1.43))
 
 tree = Sequence("Main", children=[
             SetPosition("Put arm in target position", blackboard, positions['safe']),
@@ -70,17 +53,22 @@ tree = Sequence("Main", children=[
                     Navigation("Move around the table", blackboard)
                 ])
             ], memory=True),
-            Planning("Compute path to the counter", blackboard, (0.4, 0.04)),
+            # Planning("Compute path to the counter", blackboard, (0.4, 0.04)),
+            Planning("Compute path to the counter", blackboard, (0.5, 0)),
             Navigation("Move to the counter", blackboard),
+            SetPosition("Put arm in target position", blackboard, positions['half_open']),
             SetPosition("Put arm in target position", blackboard, positions['open']),
             FindObject("Find target object to grasp", blackboard),
             PickTheObject("Pick the object up", blackboard),
             SetPosition("Put arm in target position", blackboard, positions['holding']),
-            MoveBackward("Move to the counter", blackboard),
-            Planning("Compute path to the counter", blackboard, (0, 0)),
-            Navigation("Move to the counter", blackboard),
-            FaceTable("Face the table", blackboard),
-            Stop("Stop", blackboard)
+            MoveBackward("Move to the table backwards", blackboard),
+            Planning("Compute path to the table", blackboard, (0, 0)),
+            Navigation("Move to the table", blackboard),
+            FaceDirection("Face the table", blackboard, (-0.65, -1.43)),
+            SetPosition("Put arm in target position", blackboard, positions['table']),
+            SetPosition("Put arm in target position", blackboard, positions['open']),
+            SetPosition("Put arm in target position", blackboard, positions['safe']),
+            FaceDirection("Face the counter", blackboard, (1.79, 0.7))
        ], memory=True)
        
 tree.setup_with_descendants()

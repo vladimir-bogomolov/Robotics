@@ -15,10 +15,20 @@ positions = {
        'head_1_joint': 0,
        'head_2_joint': 0
     },
+    'half_open': {
+       'torso_lift_joint': 0.28,
+       'arm_1_joint': 0.8,
+       'arm_2_joint': 0,
+       'arm_3_joint': 0,
+       'arm_4_joint': 0,
+       'arm_5_joint': 0,
+       'arm_6_joint': 0,
+       'arm_7_joint': 0
+    },
     'open': {
        'torso_lift_joint': 0.28,
        'arm_1_joint': 1.605,
-       'arm_2_joint': -0.04,
+       'arm_2_joint': -0.035,
        'arm_3_joint': 0,
        'arm_4_joint': 0,
        'arm_5_joint': 0,
@@ -31,21 +41,18 @@ positions = {
     },
     'holding': {
        'torso_lift_joint': 0.35,
-       'arm_6_joint': 0.2,
        'arm_2_joint': 0.25,
        'arm_6_joint': 0.6
     },
-    'holding2': {
-       'torso_lift_joint': 0.35,
-       'arm_1_joint': 0.71,
-       'arm_2_joint': 1.02,
-       'arm_3_joint': -2.815,
-       'arm_4_joint': 1.011,
+    'table': {
+       'torso_lift_joint': 0.20,
+       'arm_1_joint': 1.605,
+       'arm_2_joint': -0.04,
+       'arm_3_joint': 0,
+       'arm_4_joint': 0,
        'arm_5_joint': 0,
        'arm_6_joint': 0,
-       'arm_7_joint': 0,
-       'head_1_joint': 0,
-       'head_2_joint': 0
+       'head_1_joint': 0
     },
 }
 
