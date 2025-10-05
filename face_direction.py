@@ -23,10 +23,8 @@ class FaceDirection(py_trees.behaviour.Behaviour):
         self.display = self.robot.getDevice('display')
                 
     def initialise(self):
-        # Single waypoint
         self.left_motor.setVelocity(0)
         self.right_motor.setVelocity(0)
-        print('Facing target point ', self.target)
         
     def update(self):
         # Get robot position
@@ -66,12 +64,11 @@ class FaceDirection(py_trees.behaviour.Behaviour):
 
         # Finished if within 5 degrees
         if abs(angle_error) < np.deg2rad(5):
-            print('Target faced')
             return py_trees.common.Status.SUCCESS
 
         return py_trees.common.Status.RUNNING
         
     def terminate(self, new_status):
-        print("Finished facing point")
+        print("Fasing the target point")
         self.left_motor.setVelocity(0)
         self.right_motor.setVelocity(0)

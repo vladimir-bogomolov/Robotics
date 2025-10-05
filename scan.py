@@ -24,12 +24,7 @@ class FindObject(py_trees.behaviour.Behaviour):
 
             # Align y axis
             if (coordinates[1] < -delta or coordinates[1] > delta):
-                print("Aligning Y axis")
-                # Ensure enough space
-                # if (coordinates[0] < 1.5):
-                #     self.left_motor.setVelocity(-1)
-                #     self.right_motor.setVelocity(-1)
-                #     return py_trees.common.Status.RUNNING
+                # Aligning Y axis
                 if (coordinates[1] < 0):
                     # Turn right
                     self.left_motor.setVelocity(1)
@@ -40,7 +35,7 @@ class FindObject(py_trees.behaviour.Behaviour):
                     self.right_motor.setVelocity(1)
                 return py_trees.common.Status.RUNNING
             else:
-                print("Alining X axis")
+                # Alining X axis
                 arm_length = 1.265
                 if (coordinates[0] > arm_length):
                     self.left_motor.setVelocity(0.5)
